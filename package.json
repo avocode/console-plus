@@ -1,0 +1,8 @@
+{
+  "name": "console-plus",
+  "version": "1.0.0",
+  "main": "index.coffee",
+  "dependencies": {
+    "colorize-str": "jankuca/colorize-str"
+  }
+}
