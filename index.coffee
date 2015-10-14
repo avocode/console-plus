@@ -58,7 +58,7 @@ if window?.document?.createElement # browser
 
 else # terminal
   colorize = require 'colorize-str'
-  { inspect } = require 'util'
+  { format } = require 'util'
 
   inspectValue = (value) ->
     if typeof value == 'object' and value != null
@@ -68,49 +68,49 @@ else # terminal
   logFatalMessage = (args...) ->
     process.stderr.write(
       colorize('{#2D2D2D}[fatal] ') +
-      `'\033[41m'` + args.map(inspectValue).join(' ') + `'\033[0m'` +
+      `'\033[41m'` + format(args...) + `'\033[0m'` +
       '\n'
     )
 
   logErrorMessage = (args...) ->
     process.stderr.write(
       colorize('{#2D2D2D}[error] ') +
-      colorize('{#A00}' + args.map(inspectValue).join(' ')) +
+      colorize('{#A00}' + format(args...)) +
       '\n'
     )
 
   logWarnMessage = (args...) ->
     process.stderr.write(
       colorize('{#2D2D2D} [warn] ') +
-      colorize('{#CB3}' + args.map(inspectValue).join(' ')) +
+      colorize('{#CB3}' + format(args...)) +
       '\n'
     )
 
   logInfoMessage = (args...) ->
     process.stderr.write(
       colorize('{#2D2D2D} [info] ') +
-      colorize('{#5A5}' + args.map(inspectValue).join(' ')) +
+      colorize('{#5A5}' + format(args...)) +
       '\n'
     )
 
   logDebugMessage = (args...) ->
     process.stderr.write(
       colorize('{#2D2D2D}[debug] ') +
-      colorize('{#555}' + args.map(inspectValue).join(' ')) +
+      colorize('{#555}' + format(args...)) +
       '\n'
     )
 
   logTraceMessage = (args...) ->
     process.stderr.write(
       colorize('{#2D2D2D}[trace] ') +
-      colorize('{#444}' + args.map(inspectValue).join(' ')) +
+      colorize('{#444}' + format(args...)) +
       '\n'
     )
 
   logSillyMessage = (args...) ->
     process.stderr.write(
       colorize('{#2D2D2D}[silly] ') +
-      colorize('{#333}' + args.map(inspectValue).join(' ')) +
+      colorize('{#333}' + format(args...)) +
       '\n'
     )
 
