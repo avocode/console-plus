@@ -33,7 +33,7 @@ if window?.document?.createElement # browser
       args.unshift(message)
       writeConsoleInfo('%c [info]', 'color: #C0C0C0', args...)
     else
-      writeConsoleInfo('%c [info] %c' + message, 'color: #C0C0C0', 'color: #5A5', args...)
+      writeConsoleInfo('%c [info] %c' + message, 'color: #C0C0C0', 'color: #5A5; font-weight: bold', args...)
 
   logDebugMessage = (message, args...) ->
     if typeof message == 'object' and message != null
