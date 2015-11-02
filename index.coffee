@@ -1,7 +1,7 @@
 _ = require 'lodash'
 
 
-if window?.document?.createElement # browser
+if window?.document?.createElement and window?.name != 'nodejs' # browser
   writeConsoleError = console.error.bind(console)
   writeConsoleWarn = console.warn.bind(console)
   writeConsoleInfo = console.info.bind(console)
