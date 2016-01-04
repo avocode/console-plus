@@ -5,6 +5,7 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
   writeConsoleError = console.error.bind(console)
   writeConsoleWarn = console.warn.bind(console)
   writeConsoleInfo = console.info.bind(console)
+  writeConsoleTrace = console.trace.bind(console)
   writeConsoleDebug = (console.debug or console.log).bind(console)
 
   logFatalMessage = (message, args...) ->
@@ -45,9 +46,9 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
   logTraceMessage = (message, args...) ->
     if typeof message == 'object' and message != null
       args.unshift(message)
-      writeConsoleDebug('%c[trace]', 'color: #C0C0C0', args...)
+      writeConsoleTrace('%c[trace]', 'color: #C0C0C0', args...)
     else
-      writeConsoleDebug('%c[trace] %c' + message, 'color: #C0C0C0', 'color: #AAA', args...)
+      writeConsoleTrace('%c[trace] %c' + message, 'color: #C0C0C0', 'color: #AAA', args...)
 
   logSillyMessage = (message, args...) ->
     if typeof message == 'object' and message != null
@@ -101,10 +102,12 @@ else # terminal
     )
 
   logTraceMessage = (args...) ->
+    stack = new Error().stack.split('\n').slice(3).join('\n')
     process.stderr.write(
       colorize('{#2D2D2D}[trace] ') +
       colorize('{#444}' + format(args...)) +
-      '\n'
+      '\n' +
+      colorize('{#555}' + stack)
     )
 
   logSillyMessage = (args...) ->
