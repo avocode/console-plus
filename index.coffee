@@ -12,8 +12,9 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
       message = 'FATAL'
 
     return [
-      "%c[!] %c#{message}"
-      'color: #C0C0C0'
+      "%c  ! %c %c#{message}"
+      'color: #C0C0C0; border-right: 1px solid #D0D0D0; padding-left: 3px'
+      'color: #FFF'
       'color: #FFF; background-color: #E00; padding: 0 3px'
       args...
     ]
@@ -24,8 +25,9 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
       message = 'ERROR'
 
     return [
-      "%c[!] %c#{message}"
-      'color: #C0C0C0'
+      "%c  ! %c %c#{message}"
+      'color: #C0C0C0; border-right: 1px solid #D0D0D0; padding-left: 3px'
+      'color: #FFF'
       'color: #E00; background-color: #FDD; padding: 0 3px'
       args...
     ]
@@ -36,8 +38,9 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
       message = ''
 
     return [
-      "%c [warn] %c#{message}"
-      'color: #C0C0C0'
+      "%c warn %c %c#{message}"
+      'color: #C0C0C0; border-right: 1px solid #D0D0D0'
+      'color: #FFF'
       'color: #C63; background-color: #FFA; padding: 0 3px; margin: 0 -3px'
       args...
     ]
@@ -48,8 +51,9 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
       message = ''
 
     return [
-      "%c [info] %c#{message}"
-      'color: #C0C0C0'
+      "%c info %c %c#{message}"
+      'color: #C0C0C0; border-right: 1px solid #D0D0D0'
+      'color: #FFF'
       'color: #5A5; font-weight: bold'
       args...
     ]
@@ -60,8 +64,9 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
       message = ''
 
     return [
-      "%c[debug] %c#{message}"
-      'color: #C0C0C0'
+      "%cdebug %c %c#{message}"
+      'color: #C0C0C0; border-right: 1px solid #D0D0D0'
+      'color: #FFF'
       'color: #999'
       args...
     ]
@@ -72,8 +77,9 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
       message = ''
 
     return [
-      "%c[trace] %c#{message}"
-      'color: #C0C0C0'
+      "%c... %c %c#{message}"
+      'color: #C0C0C0; border-right: 1px solid #D0D0D0; padding-left: 3px'
+      'color: #FFF'
       'color: #AAA'
       args...
     ]
@@ -84,7 +90,7 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
       message = ''
 
     return [
-      "%c[silly] %c#{message}"
+      "%csilly | %c#{message}"
       'color: #C0C0C0'
       'color: #BBB'
       args...
@@ -122,35 +128,35 @@ else # terminal
 
   logFatalMessage = (args...) ->
     process.stderr.write(
-      colorize('{#2D2D2D}[fatal] ') +
+      colorize('{#2D2D2D} fatal | ') +
       `'\033[41m'` + format(args...) + `'\033[0m'` +
       '\n'
     )
 
   logErrorMessage = (args...) ->
     process.stderr.write(
-      colorize('{#2D2D2D}[error] ') +
+      colorize('{#2D2D2D} error | ') +
       colorize('{#A00}' + format(args...)) +
       '\n'
     )
 
   logWarnMessage = (args...) ->
     process.stderr.write(
-      colorize('{#2D2D2D} [warn] ') +
+      colorize('{#2D2D2D}  warn | ') +
       colorize('{#CB3}' + format(args...)) +
       '\n'
     )
 
   logInfoMessage = (args...) ->
     process.stderr.write(
-      colorize('{#2D2D2D} [info] ') +
+      colorize('{#2D2D2D}  info | ') +
       colorize('{#5A5}' + format(args...)) +
       '\n'
     )
 
   logDebugMessage = (args...) ->
     process.stderr.write(
-      colorize('{#2D2D2D}[debug] ') +
+      colorize('{#2D2D2D} debug | ') +
       colorize('{#555}' + format(args...)) +
       '\n'
     )
@@ -158,7 +164,7 @@ else # terminal
   logTraceMessage = (args...) ->
     stack = new Error().stack.split('\n').slice(3).join('\n')
     process.stderr.write(
-      colorize('{#2D2D2D}[trace] ') +
+      colorize('{#2D2D2D} trace | ') +
       colorize('{#444}' + format(args...)) +
       '\n' +
       colorize('{#555}' + stack)
@@ -166,7 +172,7 @@ else # terminal
 
   logSillyMessage = (args...) ->
     process.stderr.write(
-      colorize('{#2D2D2D}[silly] ') +
+      colorize('{#2D2D2D} silly | ') +
       colorize('{#333}' + format(args...)) +
       '\n'
     )
