@@ -1,5 +1,3 @@
-_ = require 'lodash'
-
 
 if window?.document?.createElement and window?.name != 'nodejs' # browser
   writeConsoleError = console.error.bind(console)
@@ -176,13 +174,13 @@ else # terminal
 
 module.exports =
   install: ->
-    console.silly = _.partial(logSillyMessage)
-    console.trace = _.partial(logTraceMessage)
-    console.debug = _.partial(logDebugMessage)
-    console.info = _.partial(logInfoMessage)
-    console.warn = _.partial(logWarnMessage)
-    console.error = _.partial(logErrorMessage)
-    console.fatal = _.partial(logFatalMessage)
+    console.silly = logSillyMessage
+    console.trace = logTraceMessage
+    console.debug = logDebugMessage
+    console.info = logInfoMessage
+    console.warn = logWarnMessage
+    console.error = logErrorMessage
+    console.fatal = logFatalMessage
 
   test: ->
     console.silly('silly message')
