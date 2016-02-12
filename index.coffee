@@ -8,54 +8,110 @@ if window?.document?.createElement and window?.name != 'nodejs' # browser
   writeConsoleTrace = console.trace.bind(console)
   writeConsoleDebug = (console.debug or console.log).bind(console)
 
-  logFatalMessage = (message, args...) ->
+  formatFatalMessage = (message, args...) ->
     if typeof message == 'object' and message != null
       args.unshift(message)
-      writeConsoleError('%c[!] %cFATAL', 'color: #C0C0C0', 'color: #FFF; background-color: #E00; padding: 0 3px', args...)
-    else
-      writeConsoleError('%c[!] %c' + message, 'color: #C0C0C0', 'color: #FFF; background-color: #E00; padding: 0 3px', args...)
+      message = 'FATAL'
 
-  logErrorMessage = (message, args...) ->
-    if typeof message == 'object' and message != null
-      args.unshift(message)
-      writeConsoleError('%c[!] %cERROR', 'color: #C0C0C0', 'color: #E00; background-color: #FDD; padding: 0 3px', args...)
-    else
-      writeConsoleError('%c[!] %c' + message, 'color: #C0C0C0', 'color: #E00; background-color: #FDD; padding: 0 3px', args...)
+    return [
+      "%c[!] %c#{message}"
+      'color: #C0C0C0'
+      'color: #FFF; background-color: #E00; padding: 0 3px'
+      args...
+    ]
 
-  logWarnMessage = (message, args...) ->
+  formatErrorMessage = (message, args...) ->
     if typeof message == 'object' and message != null
       args.unshift(message)
-      writeConsoleWarn('%c [warn]', 'color: #C0C0C0', args...)
-    else
-      writeConsoleWarn('%c [warn] %c' + message, 'color: #C0C0C0', 'color: #C63; background-color: #FFA; padding: 0 3px; margin: 0 -3px', args...)
+      message = 'ERROR'
 
-  logInfoMessage = (message, args...) ->
-    if typeof message == 'object' and message != null
-      args.unshift(message)
-      writeConsoleInfo('%c [info]', 'color: #C0C0C0', args...)
-    else
-      writeConsoleInfo('%c [info] %c' + message, 'color: #C0C0C0', 'color: #5A5; font-weight: bold', args...)
+    return [
+      "%c[!] %c#{message}"
+      'color: #C0C0C0'
+      'color: #E00; background-color: #FDD; padding: 0 3px'
+      args...
+    ]
 
-  logDebugMessage = (message, args...) ->
+  formatWarnMessage = (message, args...) ->
     if typeof message == 'object' and message != null
       args.unshift(message)
-      writeConsoleDebug('%c[debug]', 'color: #C0C0C0', args...)
-    else
-      writeConsoleDebug('%c[debug] %c' + message, 'color: #C0C0C0', 'color: #999', args...)
+      message = ''
 
-  logTraceMessage = (message, args...) ->
-    if typeof message == 'object' and message != null
-      args.unshift(message)
-      writeConsoleTrace('%c[trace]', 'color: #C0C0C0', args...)
-    else
-      writeConsoleTrace('%c[trace] %c' + message, 'color: #C0C0C0', 'color: #AAA', args...)
+    return [
+      "%c [warn] %c#{message}"
+      'color: #C0C0C0'
+      'color: #C63; background-color: #FFA; padding: 0 3px; margin: 0 -3px'
+      args...
+    ]
 
-  logSillyMessage = (message, args...) ->
+  formatInfoMessage = (message, args...) ->
     if typeof message == 'object' and message != null
       args.unshift(message)
-      writeConsoleDebug('%c[silly]', 'color: #C0C0C0', args...)
-    else
-      writeConsoleDebug('%c[silly] %c' + message, 'color: #C0C0C0', 'color: #BBB', args...)
+      message = ''
+
+    return [
+      "%c [info] %c#{message}"
+      'color: #C0C0C0'
+      'color: #5A5; font-weight: bold'
+      args...
+    ]
+
+  formatDebugMessage = (message, args...) ->
+    if typeof message == 'object' and message != null
+      args.unshift(message)
+      message = ''
+
+    return [
+      "%c[debug] %c#{message}"
+      'color: #C0C0C0'
+      'color: #999'
+      args...
+    ]
+
+  formatTraceMessage = (message, args...) ->
+    if typeof message == 'object' and message != null
+      args.unshift(message)
+      message = ''
+
+    return [
+      "%c[trace] %c#{message}"
+      'color: #C0C0C0'
+      'color: #AAA'
+      args...
+    ]
+
+  formatSillyMessage = (message, args...) ->
+    if typeof message == 'object' and message != null
+      args.unshift(message)
+      message = ''
+
+    return [
+      "%c[silly] %c#{message}"
+      'color: #C0C0C0'
+      'color: #BBB'
+      args...
+    ]
+
+  logFatalMessage = (args...) ->
+    writeConsoleError(formatFatalMessage(args...)...)
+
+  logErrorMessage = (args...) ->
+    writeConsoleError(formatErrorMessage(args...)...)
+
+  logWarnMessage = (args...) ->
+    writeConsoleWarn(formatWarnMessage(args...)...)
+
+  logInfoMessage = (args...) ->
+    writeConsoleInfo(formatInfoMessage(args...)...)
+
+  logDebugMessage = (args...) ->
+    writeConsoleDebug(formatDebugMessage(args...)...)
+
+  logTraceMessage = (args...) ->
+    writeConsoleTrace(formatTraceMessage(args...)...)
+
+  logSillyMessage = (args...) ->
+    writeConsoleDebug(formatSillyMessage(args...)...)
 
 else # terminal
   colorize = require 'colorize-str'
