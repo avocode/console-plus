@@ -1,8 +1,11 @@
 {
   "name": "console-plus",
-  "version": "1.1.0",
-  "main": "index.coffee",
-  "dependencies": {
-    "colorize-str": "jankuca/colorize-str"
+  "version": "1.2.0",
+  "main": "index.js",
+  "devDependencies": {
+    "coffee-script": "^1.10.0"
+  },
+  "scripts": {
+    "postinstall": "coffee -c index.coffee"
   }
 }
