@@ -9,6 +9,6 @@
     "postinstall": "coffee -c index.coffee"
   },
   "dependencies": {
-    "colorize-str": "^1.0.0"
+    "colorize-str": "jankuca/colorize-str#a6f012438ec7bd9df858e092bc869982389c49dc"
   }
 }
