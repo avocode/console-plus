@@ -7,5 +7,8 @@
   },
   "scripts": {
     "postinstall": "coffee -c index.coffee"
+  },
+  "dependencies": {
+    "colorize-str": "^1.0.0"
   }
 }
