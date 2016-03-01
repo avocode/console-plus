@@ -1,4 +1,5 @@
 colors = require './colors'
+LogLevels = require './log-levels'
 prefixes = require './prefixes'
 
 BrowserTransport = require './transports/browser-transport'
@@ -21,6 +22,8 @@ isBrowser = (globalScope) ->
 
 
 module.exports =
+  LogLevels: LogLevels
+
   create: (options = {}) ->
     globalScope = getGlobalScope()
     browser = isBrowser(globalScope)
