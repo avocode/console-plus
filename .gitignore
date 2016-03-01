@@ -1,5 +1,6 @@
 lib/
 node_modules/
 .DS_Store
-npm-debug.log
+cplus.js
 index.js
+npm-debug.log
