@@ -36,14 +36,13 @@ class BrowserTransport
     messageStyle = @_getMessageStyle(logLevel)
 
     log = @_getConsoleMethod(logLevel)
-    log.call(
-      @_console
+    log.apply(@_console, [
       "%c#{prefix}%c %c#{message}"
       prefixStyle
       'color: #FFF'
       messageStyle
       args...
-    )
+    ])
 
   _getLogLevelPrefix: (logLevel) ->
     prefix = @_prefixes[logLevel] or @_defaultPrefix
