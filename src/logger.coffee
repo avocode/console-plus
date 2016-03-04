@@ -18,9 +18,9 @@ class Logger
     nextConsole = Object.create(console)
     nextConsole.$__consolePlus = true
 
-    Object.keys(console).forEach (key) ->
-      if typeof console[key] == 'function'
-        nextConsole[key] = console[key].bind(console)
+    for key, method of console
+      if typeof method == 'function'
+        nextConsole[key] = method.bind(console)
 
     if LogLevels.SILLY not in @_untouchedLevels
       nextConsole.silly = @_logMessage.bind(this, LogLevels.SILLY)

@@ -40,3 +40,18 @@ it 'should invoke console.log in the context of the original console',
   extendedConsole = logger.extendConsole(originalConsole)
   extendedConsole.log('Testing console.log()')
   test.is(consoleLogContext, originalConsole)
+
+
+# NOTE: This tests against "Illegal invocation".
+it 'should invoke console.log in the context of the original console ' +
+    'even when it was defined on a prototype', (test) ->
+  consoleLogContext = null
+  originalConsolePrototype =
+    log: -> consoleLogContext = this
+
+  originalConsole = Object.create(originalConsolePrototype)
+
+  logger = new Logger()
+  extendedConsole = logger.extendConsole(originalConsole)
+  extendedConsole.log('Testing console.log()')
+  test.is(consoleLogContext, originalConsole)
