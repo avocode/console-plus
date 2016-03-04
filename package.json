@@ -3,9 +3,11 @@
   "version": "1.3.3",
   "main": "cplus.js",
   "scripts": {
-    "prepublish": "rimraf lib; coffee -o lib src; webpack --output-library-target commonjs2 lib/index.js cplus.js"
+    "prepublish": "rimraf lib; coffee -o lib src; webpack --output-library-target commonjs2 lib/index.js cplus.js",
+    "test": "npm run prepublish; ava lib/**/*.spec.js"
   },
   "devDependencies": {
+    "ava": "0.12.x",
     "coffee-script": "1.10.x",
     "colorize-str": "jankuca/colorize-str#a6f012438ec7bd9df858e092bc869982389c49dc",
     "rimraf": "2.5.x",
