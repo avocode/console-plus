@@ -18,40 +18,30 @@ class Logger
     nextConsole = Object.create(console)
     nextConsole.$__consolePlus = true
 
+    Object.keys(console).forEach (key) ->
+      if typeof console[key] == 'function'
+        nextConsole[key] = console[key].bind(console)
+
     if LogLevels.SILLY not in @_untouchedLevels
       nextConsole.silly = @_logMessage.bind(this, LogLevels.SILLY)
-    else
-      nextConsole.silly = console.silly?.bind(console)
 
     if LogLevels.TRACE not in @_untouchedLevels
       nextConsole.trace = @_logMessage.bind(this, LogLevels.TRACE)
-    else
-      nextConsole.trace = console.trace?.bind(console)
 
     if LogLevels.DEBUG not in @_untouchedLevels
       nextConsole.debug = @_logMessage.bind(this, LogLevels.DEBUG)
-    else
-      nextConsole.debug = console.debug?.bind(console)
 
     if LogLevels.INFO not in @_untouchedLevels
       nextConsole.info = @_logMessage.bind(this, LogLevels.INFO)
-    else
-      nextConsole.info = console.info?.bind(console)
 
     if LogLevels.WARN not in @_untouchedLevels
       nextConsole.warn = @_logMessage.bind(this, LogLevels.WARN)
-    else
-      nextConsole.warn = console.warn?.bind(console)
 
     if LogLevels.ERROR not in @_untouchedLevels
       nextConsole.error = @_logMessage.bind(this, LogLevels.ERROR)
-    else
-      nextConsole.error = console.error?.bind(console)
 
     if LogLevels.FATAL not in @_untouchedLevels
       nextConsole.fatal = @_logMessage.bind(this, LogLevels.FATAL)
-    else
-      nextConsole.fatal = console.fatal?.bind(console)
 
     return nextConsole
 
