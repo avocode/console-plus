@@ -19,6 +19,7 @@ class Logger extends EventEmitter
 
     nextConsole = Object.create(console)
     nextConsole.$__consolePlus = true
+    nextConsole.logger = this
 
     for key, method of console
       if typeof method == 'function'
