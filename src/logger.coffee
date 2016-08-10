@@ -4,7 +4,7 @@ LogLevels = require './log-levels'
 
 
 class Logger extends EventEmitter
-  constructor: (transport, options = {}) ->
+  constructor: (transport = null, options = {}) ->
     @_transport = transport
     @_levelLimit = options.logLevel or LogLevels.SILLY
     @_untouchedLevels = options.untouchedLogLevels or []
@@ -52,7 +52,7 @@ class Logger extends EventEmitter
     if logLevel > @_levelLimit
       return
 
-    @_transport.logMessage(logLevel, args...)
+    @_transport?.logMessage(logLevel, args...)
 
     @emit('message', {
       logLevel,
