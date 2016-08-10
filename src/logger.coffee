@@ -1,7 +1,9 @@
+EventEmitter = require 'eventemitter3'
+
 LogLevels = require './log-levels'
 
 
-class Logger
+class Logger extends EventEmitter
   constructor: (transport, options = {}) ->
     @_transport = transport
     @_levelLimit = options.logLevel or LogLevels.SILLY
@@ -50,6 +52,11 @@ class Logger
       return
 
     @_transport.logMessage(logLevel, args...)
+
+    @emit('message', {
+      logLevel,
+      args
+    })
 
 
 module.exports = Logger
