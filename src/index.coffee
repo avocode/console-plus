@@ -23,6 +23,8 @@ isBrowser = (globalScope) ->
 
 module.exports =
   LogLevels: LogLevels
+  
+  Logger: Logger
 
   create: (options = {}) ->
     globalScope = getGlobalScope()
