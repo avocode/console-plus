@@ -12,5 +12,8 @@
     "colorize-str": "jankuca/colorize-str#a6f012438ec7bd9df858e092bc869982389c49dc",
     "rimraf": "2.5.x",
     "webpack": "1.12.14"
+  },
+  "dependencies": {
+    "eventemitter3": "^1.2.0"
   }
 }

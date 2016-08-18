@@ -1,8 +1,10 @@
+EventEmitter = require 'eventemitter3'
+
 LogLevels = require './log-levels'
 
 
-class Logger
-  constructor: (transport, options = {}) ->
+class Logger extends EventEmitter
+  constructor: (transport = null, options = {}) ->
     @_transport = transport
     @_levelLimit = options.logLevel or LogLevels.SILLY
     @_untouchedLevels = options.untouchedLogLevels or []
@@ -17,6 +19,7 @@ class Logger
 
     nextConsole = Object.create(console)
     nextConsole.$__consolePlus = true
+    nextConsole.logger = this
 
     for key, method of console
       if typeof method == 'function'
@@ -49,7 +52,12 @@ class Logger
     if logLevel > @_levelLimit
       return
 
-    @_transport.logMessage(logLevel, args...)
+    @_transport?.logMessage(logLevel, args...)
+
+    @emit('message', {
+      logLevel,
+      args
+    })
 
 
 module.exports = Logger
