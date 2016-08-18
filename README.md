@@ -1,6 +1,6 @@
 # Console Plus
 
-[![Build Status](https://travis-ci.org/jankuca/console-plus.svg?branch=master)](https://travis-ci.org/jankuca/console-plus)
+[![Build Status](https://travis-ci.org/avocode/console-plus.svg?branch=master)](https://travis-ci.org/avocode/console-plus)
 
 - Adds more `console` log levels: `fatal`, `error`, `warn`, `info`, `log`, `debug`, `trace`, `silly`.
 - Makes the console output pretty, styled and prefixed by the log level:
