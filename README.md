@@ -1,5 +1,9 @@
 # Console Plus
 
+```
+npm install cplus
+```
+
 [![Build Status](https://travis-ci.org/avocode/console-plus.svg?branch=master)](https://travis-ci.org/avocode/console-plus)
 
 - Adds more `console` log levels: `fatal`, `error`, `warn`, `info`, `log`, `debug`, `trace`, `silly`.
