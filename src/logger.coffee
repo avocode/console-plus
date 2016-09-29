@@ -49,15 +49,15 @@ class Logger extends EventEmitter
     return nextConsole
 
   _logMessage: (logLevel, args...) ->
-    if logLevel > @_levelLimit
-      return
-
-    @_transport?.logMessage(logLevel, args...)
-
     @emit('message', {
       logLevel,
       args
     })
+
+    if logLevel > @_levelLimit
+      return
+
+    @_transport?.logMessage(logLevel, args...)
 
 
 module.exports = Logger
