@@ -15,7 +15,7 @@ class Logger extends EventEmitter
   extendConsole: (console) ->
     # NOTE: Always start with the native/initial console.
     if console.$__consolePlus
-      console = Object.getProtytypeOf(console)
+      console = Object.getPrototypeOf(console)
 
     nextConsole = Object.create(console)
     nextConsole.$__consolePlus = true
