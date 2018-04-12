@@ -48,6 +48,9 @@ class Logger extends EventEmitter
 
     return nextConsole
 
+  setTransport: (transportInstance) ->
+    @_transport = transportInstance 
+
   _logMessage: (logLevel, args...) ->
     @emit('message', {
       logLevel,
