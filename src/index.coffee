@@ -6,19 +6,32 @@ BrowserTransport = require './transports/browser-transport'
 CliTransport = require './transports/cli-transport'
 Logger = require './logger'
 
+{ getGlobalScope, isBrowser } = require './utils'
 
-getGlobalScope = ->
-  if typeof global != 'undefined'
-    return global
+createBrowserTransport = ->
+  globalScope = getGlobalScope()
+  transport = new BrowserTransport(globalScope.console)
+  transport.setLogLevelPrefixes(prefixes.browser)
+  transport.setLogLevelStyles(colors.browser)
 
-  return window
+  return transport
 
+createCliTransport = ->
+  globalScope = getGlobalScope()
+  transport = new CliTransport(globalScope.process.stderr)
+  transport.setLogLevelPrefixes(prefixes.cli)
+  transport.setLogLevelColors(colors.cli)
 
-isBrowser = (globalScope) ->
-  return (
-    globalScope.window?.document?.createElement and
-    globalScope.window?.name != 'nodejs'
-  )
+  return transport
+
+createTransport = ->
+  globalScope = getGlobalScope()
+  browser = isBrowser(globalScope)
+
+  if browser
+    return createBrowserTransport()
+
+  return createCliTransport()
 
 
 module.exports =
@@ -26,21 +39,21 @@ module.exports =
   
   Logger: Logger
 
+  transports:
+    BrowserTransport: BrowserTransport
+    CliTransport: CliTransport
+
+  createTransport: createTransport
+  createBrowserTransport: createBrowserTransport
+  createCliTransport: createCliTransport
+
   create: (options = {}) ->
     globalScope = getGlobalScope()
-    browser = isBrowser(globalScope)
-
-    if browser
-      transport = new BrowserTransport(globalScope.console)
-      transport.setLogLevelPrefixes(prefixes.browser)
-      transport.setLogLevelStyles(colors.browser)
-    else
-      transport = new CliTransport(globalScope.process.stderr)
-      transport.setLogLevelPrefixes(prefixes.cli)
-      transport.setLogLevelColors(colors.cli)
+    transport = options.transport or createTransport() 
 
     logger = new Logger(transport, options)
     nextConsole = logger.extendConsole(globalScope.console)
+
     return nextConsole
 
   install: (options = {}) ->
@@ -52,6 +65,8 @@ module.exports =
 
     if globalScope.console != nextConsole
       throw new Error('Wtf')
+
+    return nextConsole 
 
   test: ->
     globalScope = getGlobalScope()

@@ -29,6 +29,46 @@ npm install cplus
    })
    ```
 
+- You can also pass your own custom transport (option: `transport`).
+
+  ```javascript
+  const myCustomTransportInstance = new CustomTransport()
+
+  cplus.install({
+    transport: myCustomTransportInstance
+  })
+  ```
+
+- If you want to get built-in transport that is already set-up with default configuration
+  you can use factories `createBrowserTransport` or `createCliTransport` to get transport
+  instance (this factory does not take any arguments).
+  This is useful if you still want to use `cplus` logging but you may wish
+  to capture or modify the incoming data:
+
+  ```javascript
+  import { createCliTransport } from 'cplus'
+
+
+  // ...
+
+  class CustomTransport {
+    constructor() {
+      this._cliTransport = createCliTransport() 
+    }
+
+    logMessage(logLevel, ...args) {
+      // do my own stuff here
+      const cleanData = convertData(args)
+
+      this._cliTransport.logMessage(logLevel, cleanData)
+    }
+  }
+
+  ```
+
+- If you want to access built-in transports directly, you can do that. Just import `transports` object
+  that contains `BrowserTransport` and `CliTransport` constructors.
+
 ## Usage
 
 ```javascript
