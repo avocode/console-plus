@@ -11,7 +11,9 @@ npm install cplus
 
     ![Console Output](docs/images/console-output.png)
 
-- Allows log level limit (option: `logLevel`).
+- Allows log level limit (option: `logLevel`). NOTE: This will only work with
+  built-in transports. So if you override it with your own transport (using `transport` option),
+  you have to handle the logic in there.
 
    ```javascript
    // Only display log levels `warn` and more severe (`error`, `fatal`).
@@ -68,6 +70,26 @@ npm install cplus
 
 - If you want to access built-in transports directly, you can do that. Just import `transports` object
   that contains `BrowserTransport` and `CliTransport` constructors.
+
+- If you need to switch from built-in transport for `Logger` (perhaps after initialization or right after installing `cplus`), you can do so by calling `setTransport`:
+
+```javascript
+  import cplus from 'cplus'
+
+  cplus.install({
+    untouchedLogLevels: [ cplus.LogLevels.ERROR, cplus.LogLevels.TRACE ],
+  })
+
+  // after the installation phase, instance of logger will be avaible in browser
+  // like this
+  const logger = window.console.logger
+
+  // create your own instance of custom transport
+  const customTransport = new CustomTransport()
+
+  // switch from built-in transport to your custom one
+  logger.setTransport(customTransport)
+```
 
 ## Usage
 

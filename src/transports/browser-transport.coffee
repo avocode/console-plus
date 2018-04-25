@@ -2,7 +2,7 @@ LogLevels = require '../log-levels'
 
 
 class BrowserTransport
-  constructor: (console) ->
+  constructor: (console, options = {}) ->
     @_console = console
 
     @_prefixStyle = 'color: #C0C0C0; border-right: 1px solid #D0D0D0; padding-left: 3px'
@@ -11,6 +11,7 @@ class BrowserTransport
 
     @_styles = {}
     @_defaultStyle = 'color: #000'
+    @_levelLimit = options.logLevel or LogLevels.SILLY
 
   setLogLevelPrefixes: (prefixes) ->
     @_prefixes = prefixes or {}
@@ -24,7 +25,13 @@ class BrowserTransport
   setDefaultStyle: (defaultStyle) ->
     @_defaultStyle = defaultStyle or ''
 
+  setLevelLimit: (logLevel) ->
+    @_levelLimit = logLevel
+
   logMessage: (logLevel, args...) ->
+    if logLevel > @_levelLimit
+      return
+
     if typeof args[0] != 'object'
       message = args[0]
       args = args.slice(1)

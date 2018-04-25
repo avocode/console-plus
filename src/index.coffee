@@ -8,30 +8,30 @@ Logger = require './logger'
 
 { getGlobalScope, isBrowser } = require './utils'
 
-createBrowserTransport = ->
+createBrowserTransport = (options) ->
   globalScope = getGlobalScope()
-  transport = new BrowserTransport(globalScope.console)
+  transport = new BrowserTransport(globalScope.console, options)
   transport.setLogLevelPrefixes(prefixes.browser)
   transport.setLogLevelStyles(colors.browser)
 
   return transport
 
-createCliTransport = ->
+createCliTransport = (options) ->
   globalScope = getGlobalScope()
-  transport = new CliTransport(globalScope.process.stderr)
+  transport = new CliTransport(globalScope.process.stderr, options)
   transport.setLogLevelPrefixes(prefixes.cli)
   transport.setLogLevelColors(colors.cli)
 
   return transport
 
-createTransport = ->
+createTransport = (options) ->
   globalScope = getGlobalScope()
   browser = isBrowser(globalScope)
 
   if browser
-    return createBrowserTransport()
+    return createBrowserTransport(options)
 
-  return createCliTransport()
+  return createCliTransport(options)
 
 
 module.exports =
@@ -49,7 +49,7 @@ module.exports =
 
   create: (options = {}) ->
     globalScope = getGlobalScope()
-    transport = options.transport or createTransport() 
+    transport = options.transport or createTransport(options) 
 
     logger = new Logger(transport, options)
     nextConsole = logger.extendConsole(globalScope.console)
