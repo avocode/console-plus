@@ -35,9 +35,10 @@ class CliTransport
     if logLevel > @_levelLimit
       return
 
-    message = util.format(args...)
     prefix = @_getLogLevelPrefix(logLevel)
+    emptyPrefix = Array.from(prefix).fill(' ').join('')
     color = @_getMessageColor(logLevel)
+    message = util.format(args...).replace(/\n/g, "\n#{emptyPrefix}")
 
     colorizedMessage = colorize("#{prefix}{#{color}}#{message}\n")
     @_outputStream.write(colorizedMessage)
