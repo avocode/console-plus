@@ -1,6 +1,6 @@
 {
   "name": "cplus",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "main": "cplus.js",
   "scripts": {
     "prepublish": "rimraf lib; coffee -o lib src; webpack --output-library-target commonjs2 lib/index.js cplus.js",
